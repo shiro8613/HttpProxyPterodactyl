@@ -7,7 +7,7 @@ RUN apk add --update --no-cache ca-certificates tzdata git
 RUN git clone -q --no-checkout https://github.com/shiro8613/HttpProxy.git
 
 RUN cd HttpProxy
-RUN go mod download
+RUN go mod tidy
 
 RUN go build -o httpproxy
 
