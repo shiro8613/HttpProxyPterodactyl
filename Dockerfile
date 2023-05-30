@@ -1,23 +1,14 @@
-FROM golang:1.19-alpine as build
-
-RUN mkdir /usr/local/httpproxy
-WORKDIR /usr/local/httpproxy
+FROM golang:1.19-alpine 
 
 RUN apk add --update --no-cache ca-certificates tzdata git 
-RUN git clone -q --no-checkout https://github.com/shiro8613/HttpProxy.git .
+RUN mkdir /usr/local/hproxy
+RUN git clone -q --no-checkout https://github.com/shiro8613/HttpProxy.git /usr/local/hproxy
+RUN cd /usr/local/hproxy && go mod tidy && go build -o httpproxy
 
-RUN go mod tidy
-
-RUN go build -o httpproxy
-
-FROM alpine:latest
-
-RUN mkdir /usr/local/httpproxy
-COPY --from=build /usr/local/httpproxy/httpproxy /usr/local/httpproxy/httpproxy
-RUN ln -s /usr/local/httpproxy/httpproxy /usr/local/bin/httpproxy
+RUN ln -s /usr/local/hproxy/httpproxy /usr/local/bin/httpproxy
 
 RUN adduser -D -h /home/container container
-RUN chown -R container:container /usr/local/httpproxy
+RUN chown -R container:container /usr/local/hproxy
 USER container
 ENV USER=container HOME=/home/container
 WORKDIR /home/container
