@@ -9,7 +9,7 @@ RUN git clone -q --no-checkout https://github.com/shiro8613/HttpProxy.git
 RUN cd HttpProxy
 RUN go mod tidy
 
-RUN go build -o httpproxy
+#RUN go build -o httpproxy
 
 FROM alpine:latest
 
