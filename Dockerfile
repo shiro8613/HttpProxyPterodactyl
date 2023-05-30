@@ -9,7 +9,7 @@ RUN go build -o httpproxy
 
 FROM alpine:latest
 COPY --from=build /usr/local/hproxy /usr/local/hproxy
-RUN ln -s /usr/local/hproxy/httpproxy
+RUN ln -s /usr/local/hproxy/httpproxy /usr/local/bin/httpproxy
 RUN adduser -D -h /home/container container
 RUN chown -R container:container /usr/local/hproxy
 USER container
