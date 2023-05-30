@@ -1,5 +1,7 @@
 FROM golang:1.19-alpine as build
 
+LABEL org.opencontainers.image.source=https://github.com/shiro8613/http-proxy-pterodactyl
+
 RUN apk add --update --no-cache ca-certificates tzdata git 
 RUN mkdir /usr/local/hproxy
 WORKDIR /usr/local/hproxy
